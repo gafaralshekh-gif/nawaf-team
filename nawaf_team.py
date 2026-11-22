@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Nawaf Team v1.7 — Professional iPhone Repair & Diagnostic Tool
+Nawaf Team v1.8 — Professional iPhone Repair & Diagnostic Tool
 برنامج لتشخيص ريستارت الآيفون ومراقبة أخطاء 3uTools وتحليلها.
 
 التشغيل:      python nawaf_team.py            (يفتح نافذة البرنامج)
@@ -493,7 +493,7 @@ def looks_textual(path, n=2048):
 # ================================================================ Nawaf Team — الخادم المحلي
 import http.server, urllib.parse, secrets, plistlib, webbrowser, platform
 
-APP, VER, BUILD = "Nawaf Team", "1.7", "10.11.2026"
+APP, VER, BUILD = "Nawaf Team", "1.8", "10.11.2026"
 CFG_PATH = os.path.join(os.path.expanduser("~"), ".nawaf_team.json")
 DEMO = {"on": False}
 TOKEN = secrets.token_hex(16)
@@ -1332,7 +1332,7 @@ def parse_devices_json(data):
 
 def db_update(timeout=25):
     import urllib.request
-    req = urllib.request.Request("https://api.ipsw.me/v4/devices", headers={"User-Agent": "NawafTeam/1.7"})
+    req = urllib.request.Request("https://api.ipsw.me/v4/devices", headers={"User-Agent": "NawafTeam/1.8"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         models = parse_devices_json(json.loads(r.read().decode("utf-8")))
     if not models:
@@ -3875,7 +3875,7 @@ def flash_product():
 
 def flash_list(product):
     import urllib.request
-    req = urllib.request.Request("https://api.ipsw.me/v4/device/" + urllib.parse.quote(product) + "?type=ipsw", headers={"User-Agent": "NawafTeam/1.7"})
+    req = urllib.request.Request("https://api.ipsw.me/v4/device/" + urllib.parse.quote(product) + "?type=ipsw", headers={"User-Agent": "NawafTeam/1.8"})
     with urllib.request.urlopen(req, timeout=25) as r:
         d = json.loads(r.read().decode("utf-8"))
     out = []
@@ -3891,7 +3891,7 @@ def flash_download_job(url, dest):
     D.update({"state": "running", "pct": 0, "msg": "يبدأ التنزيل", "path": dest})
     try:
         os.makedirs(os.path.dirname(dest), exist_ok=True)
-        req = urllib.request.Request(url, headers={"User-Agent": "NawafTeam/1.7"})
+        req = urllib.request.Request(url, headers={"User-Agent": "NawafTeam/1.8"})
         with urllib.request.urlopen(req, timeout=60) as r, open(dest + ".part", "wb") as f:
             total = int(r.headers.get("Content-Length") or 0)
             got = 0
@@ -4012,7 +4012,7 @@ UI_HTML = r'''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nawaf Team v1.7 – Professional iPhone Repair &amp; Diagnostic Tool</title>
+<title>Nawaf Team v1.8 – Professional iPhone Repair &amp; Diagnostic Tool</title>
 <style>
 :root{
   --bg:#06101f;--panel:#0c1f38;--panel2:#0f2848;--line:rgba(70,150,255,.30);--line2:rgba(70,170,255,.65);
@@ -4265,7 +4265,7 @@ body>div[style*="99999"] button{border-radius:14px!important;background:linear-g
           <div class="card"><div class="rwrap"><div class="rw"><svg viewBox="0 0 120 120"><circle class="rb" cx="60" cy="60" r="50"/><circle class="rf" id="b-ring" cx="60" cy="60" r="50"/></svg><div class="rc"><b class="ok" id="b-pct">—</b><small>Battery</small></div></div><div class="kvs" style="grid-template-columns:1fr;flex:1"><div><span>Cycles :</span><span class="v" id="b-cyc">—</span></div><div><span>Health :</span><span class="v" id="b-health">—</span></div></div><i id="b-fill" style="width:0" hidden></i></div></div>
           <div class="card"><div class="rwrap"><div class="rw"><svg viewBox="0 0 120 120"><circle class="rb" cx="60" cy="60" r="50"/><circle class="rf" id="s-ring" cx="60" cy="60" r="50"/></svg><div class="rc"><b id="s-pc">—</b><small>Storage</small></div></div><div class="mut" id="s-txt" dir="ltr" style="flex:1;text-align:right">—</div><i id="s-fill" style="width:0" hidden></i></div></div>
           <div class="card" id="m-card" style="display:none"><b>Modem / Baseband</b><div id="m-body" style="margin-top:8px"></div>
-            <button class="btn" id="m-scanbtn" style="margin-top:10px;direction:ltr">Scan Device Log (up to 1 min)</button><div id="m-scan" dir="rtl" style="margin-top:8px;font-size:12.5px"></div></div>
+            <button class="btn" id="m-scanbtn" hidden style="display:none">Scan Device Log (up to 1 min)</button><div id="m-scan" hidden style="display:none"></div></div>
         </div>
       </div>
       <div class="modes" id="d-modes"></div>
@@ -4686,7 +4686,7 @@ async function pollMon(){
 }
 function report(){
   const a=monState&&monState.analysis; if(!a)return'';
-  return `Nawaf Team v1.7 — تقرير\nالتاريخ: ${new Date().toLocaleString()}\nالخطأ: ${a.code}\nمرحلة الفشل: ${a.stage}\nالفئة: ${a.cat_ar}\nالسبب المحتمل: ${a.cause}\nالاحتمالات:\n${a.poss.map((x,i)=>' '+(i+1)+'. '+x).join('\n')}\nخطوات الفحص:\n${a.checks.map(x=>' - '+x).join('\n')}\nالسطر الأصلي: ${a.line}\n`;
+  return `Nawaf Team v1.8 — تقرير\nالتاريخ: ${new Date().toLocaleString()}\nالخطأ: ${a.code}\nمرحلة الفشل: ${a.stage}\nالفئة: ${a.cat_ar}\nالسبب المحتمل: ${a.cause}\nالاحتمالات:\n${a.poss.map((x,i)=>' '+(i+1)+'. '+x).join('\n')}\nخطوات الفحص:\n${a.checks.map(x=>' - '+x).join('\n')}\nالسطر الأصلي: ${a.line}\n`;
 }
 document.addEventListener('click',async e=>{
   const b=e.target.closest('[data-a]'); if(!b)return; const a=b.dataset.a;
@@ -5341,7 +5341,7 @@ def _lfb(method, e, sub, data=None):
     _rq = _ur.Request(_FB + "/users/" + _lkey(e) + "/" + sub + ".json", method=method, data=(json.dumps(data).encode() if data is not None else None), headers={"Content-Type": "application/json"})
     with _ur.urlopen(_rq, timeout=6) as _r:
         return json.loads(_r.read().decode() or "null")
-_APP_REL = "1.7"
+_APP_REL = "1.8"
 _UC = {"t": 0, "v": None}
 def _vt(s):
     import re as _re
