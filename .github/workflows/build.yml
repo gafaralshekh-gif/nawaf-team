@@ -1,0 +1,39 @@
+
+name: Build and publish
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['nawaf_team.py']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build exe
+        shell: pwsh
+        run: |
+          pip install pyinstaller
+          pyinstaller --noconfirm --clean --onedir --name NawafTeam --console --icon nawaf.ico nawaf_team.py
+      - name: Add libimobiledevice
+        shell: pwsh
+        run: |
+          Expand-Archive libimobiledevice.zip -DestinationPath dist/NawafTeam
+          Remove-Item dist/NawafTeam/nawaf_license.json -ErrorAction SilentlyContinue
+      - name: Zip
+        shell: pwsh
+        run: Compress-Archive -Path dist/NawafTeam -DestinationPath NawafTeam.zip
+      - name: Publish release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $m = Select-String -Path nawaf_team.py -Pattern '_APP_REL\s*=\s*"([^"]+)"'
+          $v = "v" + $m.Matches[0].Groups[1].Value
+          gh release list --json tagName --jq '.[].tagName' | ForEach-Object { gh release delete $_ --cleanup-tag --yes }
+          gh release create $v NawafTeam.zip --title $v --notes "Nawaf Team $v" --latest
