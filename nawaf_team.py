@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Nawaf Team v1.5 — Professional iPhone Repair & Diagnostic Tool
+Nawaf Team v1.6 — Professional iPhone Repair & Diagnostic Tool
 برنامج لتشخيص ريستارت الآيفون ومراقبة أخطاء 3uTools وتحليلها.
 
 التشغيل:      python nawaf_team.py            (يفتح نافذة البرنامج)
@@ -493,7 +493,7 @@ def looks_textual(path, n=2048):
 # ================================================================ Nawaf Team — الخادم المحلي
 import http.server, urllib.parse, secrets, plistlib, webbrowser, platform
 
-APP, VER, BUILD = "Nawaf Team", "1.5", "10.11.2026"
+APP, VER, BUILD = "Nawaf Team", "1.6", "10.11.2026"
 CFG_PATH = os.path.join(os.path.expanduser("~"), ".nawaf_team.json")
 DEMO = {"on": False}
 TOKEN = secrets.token_hex(16)
@@ -1332,7 +1332,7 @@ def parse_devices_json(data):
 
 def db_update(timeout=25):
     import urllib.request
-    req = urllib.request.Request("https://api.ipsw.me/v4/devices", headers={"User-Agent": "NawafTeam/1.5"})
+    req = urllib.request.Request("https://api.ipsw.me/v4/devices", headers={"User-Agent": "NawafTeam/1.6"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         models = parse_devices_json(json.loads(r.read().decode("utf-8")))
     if not models:
@@ -3875,7 +3875,7 @@ def flash_product():
 
 def flash_list(product):
     import urllib.request
-    req = urllib.request.Request("https://api.ipsw.me/v4/device/" + urllib.parse.quote(product) + "?type=ipsw", headers={"User-Agent": "NawafTeam/1.5"})
+    req = urllib.request.Request("https://api.ipsw.me/v4/device/" + urllib.parse.quote(product) + "?type=ipsw", headers={"User-Agent": "NawafTeam/1.6"})
     with urllib.request.urlopen(req, timeout=25) as r:
         d = json.loads(r.read().decode("utf-8"))
     out = []
@@ -3891,7 +3891,7 @@ def flash_download_job(url, dest):
     D.update({"state": "running", "pct": 0, "msg": "يبدأ التنزيل", "path": dest})
     try:
         os.makedirs(os.path.dirname(dest), exist_ok=True)
-        req = urllib.request.Request(url, headers={"User-Agent": "NawafTeam/1.5"})
+        req = urllib.request.Request(url, headers={"User-Agent": "NawafTeam/1.6"})
         with urllib.request.urlopen(req, timeout=60) as r, open(dest + ".part", "wb") as f:
             total = int(r.headers.get("Content-Length") or 0)
             got = 0
@@ -4012,7 +4012,7 @@ UI_HTML = r'''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nawaf Team v1.5 – Professional iPhone Repair &amp; Diagnostic Tool</title>
+<title>Nawaf Team v1.6 – Professional iPhone Repair &amp; Diagnostic Tool</title>
 <style>
 :root{
   --bg:#06101f;--panel:#0c1f38;--panel2:#0f2848;--line:rgba(70,150,255,.30);--line2:rgba(70,170,255,.65);
@@ -4281,7 +4281,7 @@ body>div[style*="99999"] button{border-radius:14px!important;background:linear-g
       <h3><span class="l">سحب الـ Panic</span></h3>
       <div class="acts" style="margin:0 0 10px"><button class="btn" id="au-now" style="flex-direction:row">Pull Panic</button></div>
       <div id="au-state" class="mut" dir="auto"></div>
-      <p class="note" dir="auto">وصّل الهاتف (مفتوح القفل بعد Trust) واضغط الزر. يسحب تقارير الريستارت المخزّنة على الهاتف. إذا فشلت الأداة الحالية يثبّت البديلة (pymobiledevice3) تلقائياً؛ يحتاج إنترنت.</p>
+      
     </div>
     <div class="card">
       <h3><span class="l">تحليل الـ Panic</span></h3>
@@ -4686,7 +4686,7 @@ async function pollMon(){
 }
 function report(){
   const a=monState&&monState.analysis; if(!a)return'';
-  return `Nawaf Team v1.5 — تقرير\nالتاريخ: ${new Date().toLocaleString()}\nالخطأ: ${a.code}\nمرحلة الفشل: ${a.stage}\nالفئة: ${a.cat_ar}\nالسبب المحتمل: ${a.cause}\nالاحتمالات:\n${a.poss.map((x,i)=>' '+(i+1)+'. '+x).join('\n')}\nخطوات الفحص:\n${a.checks.map(x=>' - '+x).join('\n')}\nالسطر الأصلي: ${a.line}\n`;
+  return `Nawaf Team v1.6 — تقرير\nالتاريخ: ${new Date().toLocaleString()}\nالخطأ: ${a.code}\nمرحلة الفشل: ${a.stage}\nالفئة: ${a.cat_ar}\nالسبب المحتمل: ${a.cause}\nالاحتمالات:\n${a.poss.map((x,i)=>' '+(i+1)+'. '+x).join('\n')}\nخطوات الفحص:\n${a.checks.map(x=>' - '+x).join('\n')}\nالسطر الأصلي: ${a.line}\n`;
 }
 document.addEventListener('click',async e=>{
   const b=e.target.closest('[data-a]'); if(!b)return; const a=b.dataset.a;
@@ -5341,7 +5341,7 @@ def _lfb(method, e, sub, data=None):
     _rq = _ur.Request(_FB + "/users/" + _lkey(e) + "/" + sub + ".json", method=method, data=(json.dumps(data).encode() if data is not None else None), headers={"Content-Type": "application/json"})
     with _ur.urlopen(_rq, timeout=6) as _r:
         return json.loads(_r.read().decode() or "null")
-_APP_REL = "1.5"
+_APP_REL = "1.6"
 _UC = {"t": 0, "v": None}
 def _vt(s):
     import re as _re
